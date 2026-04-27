@@ -9,7 +9,7 @@
       "applicationUrl": "https://localhost:7040;http://localhost:5040",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "JWT_SECRET_KEY": "RoadSafetyApp_Local_Secret_ReplaceMe_123!@#"
+        "JWT_SECRET_KEY": "RoadSafetyAPI_Local_Development_Only_Secret_Key_2026_Replace_For_Real_Deployments!"
       }
     }
   }
