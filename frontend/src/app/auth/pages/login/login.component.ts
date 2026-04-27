@@ -31,7 +31,7 @@ export class LoginComponent {
 
     this.auth.login(this.form.getRawValue() as { email: string; password: string }).subscribe({
       next: (response) => {
-        const rolePath = response.user.role.toLowerCase();
+        const rolePath = response.role.toLowerCase();
         this.router.navigate([`/${rolePath}`]);
       },
       error: () => {
