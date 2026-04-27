@@ -6,7 +6,8 @@ import { Quiz, StudentProfile, Video } from '../../../core/models/app.models';
 @Component({
   selector: 'app-student-dashboard',
   templateUrl: './student-dashboard.component.html',
-  styleUrls: ['./student-dashboard.component.css']
+  styleUrls: ['./student-dashboard.component.css'],
+  standalone: false
 })
 export class StudentDashboardComponent implements OnInit {
   profile?: StudentProfile;

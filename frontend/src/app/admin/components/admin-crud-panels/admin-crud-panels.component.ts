@@ -6,7 +6,8 @@ import { Quiz, Video, SafetyTip, ParkingZone } from '../../../core/models/app.mo
 @Component({
   selector: 'app-admin-crud-panels',
   templateUrl: './admin-crud-panels.component.html',
-  styleUrls: ['./admin-crud-panels.component.css']
+  styleUrls: ['./admin-crud-panels.component.css'],
+  standalone: false
 })
 export class AdminCrudPanelsComponent implements OnInit {
   quizzes: Quiz[] = [];

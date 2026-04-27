@@ -5,7 +5,8 @@ import { Answer, Question, QuizResult } from '../../../core/models/app.models';
 @Component({
   selector: 'app-quiz-player',
   templateUrl: './quiz-player.component.html',
-  styleUrls: ['./quiz-player.component.css']
+  styleUrls: ['./quiz-player.component.css'],
+  standalone: false
 })
 export class QuizPlayerComponent implements OnChanges {
   @Input() studentProfileId!: number;

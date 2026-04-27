@@ -4,7 +4,8 @@ import { Answer, Question } from '../../../core/models/app.models';
 @Component({
   selector: 'app-question-card',
   templateUrl: './question-card.component.html',
-  styleUrls: ['./question-card.component.css']
+  styleUrls: ['./question-card.component.css'],
+  standalone: false
 })
 export class QuestionCardComponent {
   @Input() question!: Question;

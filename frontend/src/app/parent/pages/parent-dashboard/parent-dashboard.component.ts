@@ -5,7 +5,8 @@ import { ParkingZone, SafetyTip } from '../../../core/models/app.models';
 @Component({
   selector: 'app-parent-dashboard',
   templateUrl: './parent-dashboard.component.html',
-  styleUrls: ['./parent-dashboard.component.css']
+  styleUrls: ['./parent-dashboard.component.css'],
+  standalone: false
 })
 export class ParentDashboardComponent implements OnInit {
   parkingZones: ParkingZone[] = [];
