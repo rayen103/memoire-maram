@@ -2,6 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using RoadSafetyAPI.DTOs.Auth;
 using RoadSafetyAPI.Models;
@@ -16,17 +17,20 @@ public class AuthService : IAuthService
     private readonly IStudentRepository _studentRepository;
     private readonly IParentRepository _parentRepository;
     private readonly IConfiguration _configuration;
+    private readonly IHostEnvironment _hostEnvironment;
 
     public AuthService(
         IUserRepository userRepository,
         IStudentRepository studentRepository,
         IParentRepository parentRepository,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        IHostEnvironment hostEnvironment)
     {
         _userRepository = userRepository;
         _studentRepository = studentRepository;
         _parentRepository = parentRepository;
         _configuration = configuration;
+        _hostEnvironment = hostEnvironment;
     }
 
     public async Task<AuthResponseDto> RegisterAsync(RegisterDto dto)
@@ -96,9 +100,7 @@ public class AuthService : IAuthService
     private string GenerateJwtToken(User user)
     {
         var jwtSettings = _configuration.GetSection("JwtSettings");
-        var secretKey = Environment.GetEnvironmentVariable("JWT_SECRET_KEY") ?? jwtSettings["SecretKey"];
-        if (string.IsNullOrWhiteSpace(secretKey) || secretKey.Contains("CHANGE_ME", StringComparison.OrdinalIgnoreCase))
-            throw new InvalidOperationException("JWT SecretKey not configured.");
+        var secretKey = JwtSecretKeyResolver.Resolve(_configuration, _hostEnvironment.IsDevelopment());
         var issuer = jwtSettings["Issuer"];
         var audience = jwtSettings["Audience"];
         var expiryDays = int.Parse(jwtSettings["ExpiryDays"] ?? "7");

@@ -16,6 +16,7 @@ dotnet run
 
 - `dotnet run` uses `Properties/launchSettings.json` in local development, which includes a development-only JWT secret key.
 - That launch profile key is committed in this public repository and is not secure; use it only for local development.
+- Debug builds also use a development-only JWT fallback when no key is configured.
 - For production or non-launch-profile runs, always override with a strong, securely stored `JWT_SECRET_KEY` environment variable.
 
 - Swagger: `https://localhost:5001/swagger` (or local configured URL)
