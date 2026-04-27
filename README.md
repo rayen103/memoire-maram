@@ -9,6 +9,7 @@ Full-stack CRUD educational road safety application:
 
 ```bash
 cd /home/runner/work/memoire-maram/memoire-maram/backend/RoadSafetyAPI
+export JWT_SECRET_KEY='RoadSafetyApp_Local_Secret_ReplaceMe_123!@#'
 dotnet restore
 dotnet build
 dotnet run

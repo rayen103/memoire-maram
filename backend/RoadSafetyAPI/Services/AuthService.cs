@@ -14,15 +14,18 @@ public class AuthService : IAuthService
 {
     private readonly IUserRepository _userRepository;
     private readonly IStudentRepository _studentRepository;
+    private readonly IParentRepository _parentRepository;
     private readonly IConfiguration _configuration;
 
     public AuthService(
         IUserRepository userRepository,
         IStudentRepository studentRepository,
+        IParentRepository parentRepository,
         IConfiguration configuration)
     {
         _userRepository = userRepository;
         _studentRepository = studentRepository;
+        _parentRepository = parentRepository;
         _configuration = configuration;
     }
 
@@ -54,9 +57,10 @@ public class AuthService : IAuthService
         }
         else if (user.Role == "PARENT")
         {
-            // ParentProfile is created via direct context access; for simplicity inject context or use a repo
-            // We'll handle parent profile creation via the repository pattern but ParentProfile has no repository
-            // We'll add it directly - the seeder shows this pattern is acceptable
+            await _parentRepository.CreateAsync(new ParentProfile
+            {
+                UserId = user.Id
+            });
         }
 
         var token = GenerateJwtToken(user);
@@ -92,7 +96,9 @@ public class AuthService : IAuthService
     private string GenerateJwtToken(User user)
     {
         var jwtSettings = _configuration.GetSection("JwtSettings");
-        var secretKey = jwtSettings["SecretKey"] ?? throw new InvalidOperationException("JWT SecretKey not configured.");
+        var secretKey = Environment.GetEnvironmentVariable("JWT_SECRET_KEY") ?? jwtSettings["SecretKey"];
+        if (string.IsNullOrWhiteSpace(secretKey) || secretKey.Contains("CHANGE_ME", StringComparison.OrdinalIgnoreCase))
+            throw new InvalidOperationException("JWT SecretKey not configured.");
         var issuer = jwtSettings["Issuer"];
         var audience = jwtSettings["Audience"];
         var expiryDays = int.Parse(jwtSettings["ExpiryDays"] ?? "7");

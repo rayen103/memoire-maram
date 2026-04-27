@@ -10,6 +10,9 @@ namespace RoadSafetyAPI.Services;
 
 public class StudentService : IStudentService
 {
+    private const int CorrectAnswerPoints = 10;
+    private const int PointsPerLevel = 50;
+
     private readonly IStudentRepository _studentRepository;
     private readonly IAnswerRepository _answerRepository;
     private readonly IQuestionRepository _questionRepository;
@@ -146,8 +149,8 @@ public class StudentService : IStudentService
             var profile = await _studentRepository.GetByIdAsync(dto.StudentProfileId);
             if (profile != null)
             {
-                profile.Points += 10;
-                profile.Level = (profile.Points / 50) + 1;
+                profile.Points += CorrectAnswerPoints;
+                profile.Level = (profile.Points / PointsPerLevel) + 1;
                 await _studentRepository.UpdateAsync(profile);
 
                 var earnableBadges = await _badgeRepository.GetEarnableByPointsAsync(profile.Points);

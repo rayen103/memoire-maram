@@ -67,7 +67,7 @@ public class StudentController : ControllerBase
 
         return Ok(new
         {
-            message = result.IsCorrect ? "Correct answer! +10 points." : "Incorrect answer.",
+            message = result.IsCorrect ? "Correct answer! Points awarded." : "Incorrect answer.",
             isCorrect = result.IsCorrect
         });
     }
