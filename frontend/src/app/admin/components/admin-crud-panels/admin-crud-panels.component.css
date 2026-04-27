@@ -1,0 +1,6 @@
+.grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: .9rem; }
+.card { background: #fff; border-radius: 12px; padding: 1rem; box-shadow: 0 6px 20px rgba(15,23,42,.08); }
+form { display: grid; gap: .45rem; margin-bottom: .65rem; }
+input, select { border: 1px solid #cbd5e1; border-radius: 8px; padding: .5rem; }
+button { border: none; border-radius: 8px; background: #2563eb; color: white; padding: .55rem; cursor: pointer; }
+ul { padding-left: 1rem; max-height: 180px; overflow: auto; }

@@ -1,0 +1,45 @@
+<div class="grid">
+  <section class="card">
+    <h3>Quiz CRUD</h3>
+    <form [formGroup]="quizForm" (ngSubmit)="addQuiz()">
+      <input placeholder="Quiz title" formControlName="title" />
+      <input type="number" min="1" max="10" formControlName="level" />
+      <button type="submit">Add quiz</button>
+    </form>
+    <ul><li *ngFor="let quiz of quizzes">{{ quiz.title }} (L{{ quiz.level }})</li></ul>
+  </section>
+
+  <section class="card">
+    <h3>Videos CRUD</h3>
+    <form [formGroup]="videoForm" (ngSubmit)="addVideo()">
+      <input placeholder="Title" formControlName="title" />
+      <input placeholder="URL" formControlName="url" />
+      <input placeholder="Description" formControlName="description" />
+      <button type="submit">Add video</button>
+    </form>
+    <ul><li *ngFor="let video of videos">{{ video.title }}</li></ul>
+  </section>
+
+  <section class="card">
+    <h3>Safety Tips CRUD</h3>
+    <form [formGroup]="tipForm" (ngSubmit)="addTip()">
+      <input placeholder="Tip content" formControlName="content" />
+      <button type="submit">Add tip</button>
+    </form>
+    <ul><li *ngFor="let tip of tips">{{ tip.content }}</li></ul>
+  </section>
+
+  <section class="card">
+    <h3>Parking Zones CRUD</h3>
+    <form [formGroup]="zoneForm" (ngSubmit)="addZone()">
+      <input placeholder="School name" formControlName="schoolName" />
+      <select formControlName="type">
+        <option value="ALLOWED">ALLOWED</option>
+        <option value="FORBIDDEN">FORBIDDEN</option>
+      </select>
+      <input placeholder="Location" formControlName="location" />
+      <button type="submit">Add zone</button>
+    </form>
+    <ul><li *ngFor="let zone of zones">{{ zone.schoolName }} - {{ zone.type }}</li></ul>
+  </section>
+</div>

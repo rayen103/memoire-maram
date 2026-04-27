@@ -1,0 +1,6 @@
+.card { background: #fff; border-radius: 12px; padding: 1rem; box-shadow: 0 6px 20px rgba(15,23,42,.08); margin-bottom: 1rem; }
+.progress { height: 10px; border-radius: 999px; background: #e2e8f0; overflow: hidden; margin-bottom: .75rem; }
+.progress div { height: 100%; background: linear-gradient(90deg,#22c55e,#16a34a); }
+.feedback { font-weight: 700; }
+.next { border: none; background: #22c55e; color: white; border-radius: 10px; padding: .55rem .95rem; cursor: pointer; }
+ul { padding-left: 1.2rem; }

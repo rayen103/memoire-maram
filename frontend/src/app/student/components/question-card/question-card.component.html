@@ -1,0 +1,6 @@
+<div class="card">
+  <h3>{{ question.content }}</h3>
+  <div class="answers">
+    <button type="button" *ngFor="let answer of answers" (click)="submit(answer.id)" [disabled]="disabled">{{ answer.content }}</button>
+  </div>
+</div>

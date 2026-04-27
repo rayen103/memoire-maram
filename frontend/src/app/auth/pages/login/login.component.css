@@ -1,0 +1,7 @@
+.auth-card { max-width: 420px; margin: 3rem auto; padding: 1.5rem; border-radius: 14px; background: #fff; box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+.auth-card h2 { margin-top: 0; }
+label { display: block; margin-bottom: .75rem; font-weight: 600; }
+input, select { width: 100%; padding: .65rem; margin-top: .35rem; border: 1px solid #d1d5db; border-radius: 10px; }
+button { width: 100%; border: none; background: #2563eb; color: #fff; padding: .7rem; border-radius: 10px; cursor: pointer; }
+.error { color: #dc2626; }
+a { display: inline-block; margin-top: .75rem; }

@@ -1,0 +1,4 @@
+.nav { display: flex; justify-content: space-between; align-items: center; padding: .75rem 1rem; background: #0f172a; color: white; border-radius: 12px; margin-bottom: 1rem; }
+.brand { color: white; text-decoration: none; font-weight: 800; }
+.links { display: flex; gap: .75rem; align-items: center; }
+button { border: 1px solid #334155; background: #1e293b; color: white; border-radius: 8px; padding: .4rem .7rem; cursor: pointer; }

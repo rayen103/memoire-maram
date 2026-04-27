@@ -1,0 +1,9 @@
+<section class="grid" *ngIf="stats">
+  <article class="card"><h4>Total Users</h4><p>{{ stats.totalUsers }}</p></article>
+  <article class="card"><h4>Total Students</h4><p>{{ stats.totalStudents }}</p></article>
+  <article class="card"><h4>Total Parents</h4><p>{{ stats.totalParents }}</p></article>
+  <article class="card"><h4>Total Quizzes</h4><p>{{ stats.totalQuizzes }}</p></article>
+  <article class="card"><h4>Average Score</h4><p>{{ stats.averageScore | number : '1.0-2' }}%</p></article>
+</section>
+
+<app-admin-crud-panels></app-admin-crud-panels>
