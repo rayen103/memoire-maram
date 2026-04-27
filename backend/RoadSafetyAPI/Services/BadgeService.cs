@@ -38,6 +38,19 @@ public class BadgeService : IBadgeService
         return MapToDto(created);
     }
 
+    public async Task<bool> UpdateAsync(int id, UpdateBadgeDto dto)
+    {
+        var badge = await _badgeRepository.GetByIdAsync(id);
+        if (badge == null) return false;
+
+        badge.Name = dto.Name;
+        badge.Description = dto.Description ?? string.Empty;
+        badge.MinPoints = dto.MinPoints;
+
+        await _badgeRepository.UpdateAsync(badge);
+        return true;
+    }
+
     public async Task<bool> DeleteAsync(int id)
     {
         var badge = await _badgeRepository.GetByIdAsync(id);

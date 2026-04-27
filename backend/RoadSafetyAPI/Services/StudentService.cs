@@ -59,6 +59,20 @@ public class StudentService : IStudentService
         }).ToList();
     }
 
+    public async Task<List<StudentAnswerDto>> GetAnswersAsync(int studentProfileId)
+    {
+        var answers = await _studentRepository.GetAnswersByStudentIdAsync(studentProfileId);
+        return answers.Select(sa => new StudentAnswerDto
+        {
+            Id = sa.Id,
+            StudentProfileId = sa.StudentProfileId,
+            QuestionId = sa.QuestionId,
+            SelectedAnswerId = sa.SelectedAnswerId,
+            IsCorrect = sa.IsCorrect,
+            AnsweredAt = sa.AnsweredAt
+        }).ToList();
+    }
+
     public async Task<QuizResultDto?> GetQuizResultAsync(int studentProfileId, int quizId)
     {
         var quiz = await _context.Quizzes

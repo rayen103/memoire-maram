@@ -51,4 +51,16 @@ public class BadgeController : ControllerBase
         if (!deleted) return NotFound();
         return NoContent();
     }
+
+    [HttpPut("{id}")]
+    [Authorize(Roles = "ADMIN")]
+    public async Task<IActionResult> Update(int id, [FromBody] UpdateBadgeDto dto)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var updated = await _badgeService.UpdateAsync(id, dto);
+        if (!updated) return NotFound();
+        return NoContent();
+    }
 }

@@ -1,0 +1,11 @@
+# .NET
+**/bin/
+**/obj/
+
+# Angular/Node
+frontend/node_modules/
+frontend/dist/
+
+# OS/editor
+.DS_Store
+.vscode/

@@ -7,5 +7,6 @@ public interface IBadgeService
     Task<List<BadgeDto>> GetAllAsync();
     Task<BadgeDto?> GetByIdAsync(int id);
     Task<BadgeDto> CreateAsync(CreateBadgeDto dto);
+    Task<bool> UpdateAsync(int id, UpdateBadgeDto dto);
     Task<bool> DeleteAsync(int id);
 }

@@ -1,0 +1,25 @@
+<section class="grid" *ngIf="profile">
+  <article class="card">
+    <h2>Welcome {{ profile.name }}</h2>
+    <p>Points: <strong>{{ profile.points }}</strong> | Level: <strong>{{ profile.level }}</strong></p>
+    <div class="badges">
+      <span *ngFor="let badge of profile.badges">🏅 {{ badge.name }}</span>
+    </div>
+  </article>
+
+  <article class="card">
+    <h3>Available Quizzes</h3>
+    <div class="list">
+      <button *ngFor="let quiz of quizzes" (click)="startQuiz(quiz.id)">{{ quiz.title }} (L{{ quiz.level }})</button>
+    </div>
+  </article>
+</section>
+
+<app-quiz-player *ngIf="profile && selectedQuizId" [studentProfileId]="profile.id" [quizId]="selectedQuizId"></app-quiz-player>
+
+<section class="card" *ngIf="videos.length">
+  <h3>Educational Videos</h3>
+  <div class="list">
+    <a *ngFor="let video of videos" [href]="video.url" target="_blank" rel="noopener">{{ video.title }}</a>
+  </div>
+</section>

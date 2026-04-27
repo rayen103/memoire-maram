@@ -1,0 +1,7 @@
+<nav class="nav">
+  <a class="brand" routerLink="/">Road Safety Edu</a>
+  <div class="links" *ngIf="auth.user as user">
+    <span>{{ user.name }} ({{ user.role }})</span>
+    <button type="button" (click)="logout()">Logout</button>
+  </div>
+</nav>

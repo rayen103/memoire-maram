@@ -40,6 +40,13 @@ public class StudentController : ControllerBase
         return Ok(badges);
     }
 
+    [HttpGet("{studentProfileId}/answers")]
+    public async Task<IActionResult> GetAnswers(int studentProfileId)
+    {
+        var answers = await _studentService.GetAnswersAsync(studentProfileId);
+        return Ok(answers);
+    }
+
     [HttpGet("{studentProfileId}/quiz-result/{quizId}")]
     public async Task<IActionResult> GetQuizResult(int studentProfileId, int quizId)
     {

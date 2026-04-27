@@ -1,0 +1,29 @@
+<section class="card" *ngIf="questions.length && !result">
+  <h3>Quiz Progress</h3>
+  <div class="progress"><div [style.width.%]="progress"></div></div>
+  <p>Question {{ currentIndex + 1 }} / {{ questions.length }}</p>
+
+  <app-question-card
+    [question]="questions[currentIndex]"
+    [answers]="answersByQuestion[questions[currentIndex].id] || []"
+    [disabled]="submitted"
+    (answered)="onAnswered($event)"
+  ></app-question-card>
+
+  <p class="feedback" *ngIf="feedback">{{ feedback }}</p>
+  <button class="next" type="button" [disabled]="!submitted" (click)="next()">
+    {{ currentIndex < questions.length - 1 ? 'Next question' : 'Finish quiz' }}
+  </button>
+</section>
+
+<section class="card" *ngIf="result">
+  <h3>Final Score: {{ result.score | number : '1.0-0' }}%</h3>
+  <p>{{ result.correctAnswers }} correct out of {{ result.totalQuestions }}</p>
+  <ul>
+    <li *ngFor="let item of result.answers">
+      {{ item.questionContent }} -
+      <strong [style.color]="item.isCorrect ? '#16a34a' : '#dc2626'">{{ item.isCorrect ? 'Correct' : 'Wrong' }}</strong>
+      <span *ngIf="!item.isCorrect"> (Correct: {{ item.correctAnswerContent }})</span>
+    </li>
+  </ul>
+</section>
