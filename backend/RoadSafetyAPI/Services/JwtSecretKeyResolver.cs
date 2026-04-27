@@ -23,7 +23,8 @@ public static class JwtSecretKeyResolver
             return DevelopmentFallbackSecret;
         }
 
-        throw new InvalidOperationException("JWT SecretKey not configured. Set JWT_SECRET_KEY environment variable.");
+        throw new InvalidOperationException(
+            "JWT SecretKey not configured. Set JWT_SECRET_KEY environment variable or JwtSettings:SecretKey configuration value.");
     }
 
     private static bool IsDebugBuild()
