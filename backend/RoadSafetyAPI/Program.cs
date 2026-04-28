@@ -19,11 +19,7 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 
 // JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-var secretKey = Environment.GetEnvironmentVariable("JWT_SECRET_KEY") ?? jwtSettings["SecretKey"];
-if (string.IsNullOrWhiteSpace(secretKey) || secretKey.Contains("CHANGE_ME", StringComparison.OrdinalIgnoreCase))
-{
-    throw new InvalidOperationException("JWT SecretKey not configured. Set JWT_SECRET_KEY environment variable.");
-}
+var secretKey = JwtSecretKeyResolver.Resolve(builder.Configuration, builder.Environment.IsDevelopment());
 
 builder.Services.AddAuthentication(options =>
 {

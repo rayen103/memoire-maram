@@ -1,12 +1,9 @@
 export interface AuthResponse {
   token: string;
-  expiresAt: string;
-  user: {
-    id: number;
-    name: string;
-    email: string;
-    role: string;
-  };
+  email: string;
+  name: string;
+  role: string;
+  userId: number;
 }
 
 export interface AppUser {

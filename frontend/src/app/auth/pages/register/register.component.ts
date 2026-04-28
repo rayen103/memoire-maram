@@ -33,7 +33,7 @@ export class RegisterComponent {
 
     this.auth.register(this.form.getRawValue() as { name: string; email: string; password: string; role: string }).subscribe({
       next: (response) => {
-        this.router.navigate([`/${response.user.role.toLowerCase()}`]);
+        this.router.navigate([`/${response.role.toLowerCase()}`]);
       },
       error: () => {
         this.error = 'Unable to register';
