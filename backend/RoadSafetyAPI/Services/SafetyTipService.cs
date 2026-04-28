@@ -28,7 +28,14 @@ public class SafetyTipService : ISafetyTipService
 
     public async Task<SafetyTipDto> CreateAsync(CreateSafetyTipDto dto)
     {
-        var tip = new SafetyTip { Content = dto.Content };
+        var tip = new SafetyTip
+        {
+            Title = dto.Title,
+            Description = dto.Description,
+            Type = dto.Type ?? string.Empty,
+            Image = dto.Image ?? string.Empty,
+            Video = dto.Video ?? string.Empty
+        };
         var created = await _safetyTipRepository.CreateAsync(tip);
         return MapToDto(created);
     }
@@ -38,7 +45,11 @@ public class SafetyTipService : ISafetyTipService
         var tip = await _safetyTipRepository.GetByIdAsync(id);
         if (tip == null) return null;
 
-        if (dto.Content != null) tip.Content = dto.Content;
+        if (dto.Title != null) tip.Title = dto.Title;
+        if (dto.Description != null) tip.Description = dto.Description;
+        if (dto.Type != null) tip.Type = dto.Type;
+        if (dto.Image != null) tip.Image = dto.Image;
+        if (dto.Video != null) tip.Video = dto.Video;
 
         await _safetyTipRepository.UpdateAsync(tip);
         return MapToDto(tip);
@@ -56,6 +67,10 @@ public class SafetyTipService : ISafetyTipService
     private static SafetyTipDto MapToDto(SafetyTip tip) => new SafetyTipDto
     {
         Id = tip.Id,
-        Content = tip.Content
+        Title = tip.Title,
+        Description = tip.Description,
+        Type = tip.Type,
+        Image = tip.Image,
+        Video = tip.Video
     };
 }

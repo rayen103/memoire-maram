@@ -65,6 +65,9 @@ builder.Services.AddScoped<IVideoRepository, VideoRepository>();
 builder.Services.AddScoped<ISafetyTipRepository, SafetyTipRepository>();
 builder.Services.AddScoped<IParkingZoneRepository, ParkingZoneRepository>();
 builder.Services.AddScoped<IBadgeRepository, BadgeRepository>();
+builder.Services.AddScoped<ICorrectionRepository, CorrectionRepository>();
+builder.Services.AddScoped<IScoreRepository, ScoreRepository>();
+builder.Services.AddScoped<IDefiRepository, DefiRepository>();
 
 // Services
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -77,6 +80,9 @@ builder.Services.AddScoped<ISafetyTipService, SafetyTipService>();
 builder.Services.AddScoped<IParkingZoneService, ParkingZoneService>();
 builder.Services.AddScoped<IBadgeService, BadgeService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
+builder.Services.AddScoped<ICorrectionService, CorrectionService>();
+builder.Services.AddScoped<IScoreService, ScoreService>();
+builder.Services.AddScoped<IDefiService, DefiService>();
 
 builder.Services.AddControllers();
 

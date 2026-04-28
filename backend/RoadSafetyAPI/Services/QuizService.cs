@@ -44,7 +44,9 @@ public class QuizService : IQuizService
         var quiz = new Quiz
         {
             Title = dto.Title,
-            Level = dto.Level
+            Description = dto.Description ?? string.Empty,
+            Level = dto.Level,
+            ScoreMax = dto.ScoreMax
         };
         var created = await _quizRepository.CreateAsync(quiz);
         return MapToDto(created);
@@ -56,7 +58,9 @@ public class QuizService : IQuizService
         if (quiz == null) return null;
 
         if (dto.Title != null) quiz.Title = dto.Title;
+        if (dto.Description != null) quiz.Description = dto.Description;
         if (dto.Level.HasValue) quiz.Level = dto.Level.Value;
+        if (dto.ScoreMax.HasValue) quiz.ScoreMax = dto.ScoreMax.Value;
 
         await _quizRepository.UpdateAsync(quiz);
         return MapToDto(quiz);
@@ -75,7 +79,9 @@ public class QuizService : IQuizService
     {
         Id = quiz.Id,
         Title = quiz.Title,
+        Description = quiz.Description,
         Level = quiz.Level,
+        ScoreMax = quiz.ScoreMax,
         QuestionCount = quiz.Questions?.Count ?? 0
     };
 }

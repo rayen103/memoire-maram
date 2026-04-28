@@ -31,8 +31,12 @@ public class ParkingZoneService : IParkingZoneService
         var zone = new ParkingZone
         {
             SchoolName = dto.SchoolName,
+            ZoneName = dto.ZoneName ?? string.Empty,
             Type = dto.Type,
-            Location = dto.Location
+            Location = dto.Location,
+            Description = dto.Description ?? string.Empty,
+            Latitude = dto.Latitude ?? 0,
+            Longitude = dto.Longitude ?? 0
         };
         var created = await _parkingZoneRepository.CreateAsync(zone);
         return MapToDto(created);
@@ -44,8 +48,12 @@ public class ParkingZoneService : IParkingZoneService
         if (zone == null) return null;
 
         if (dto.SchoolName != null) zone.SchoolName = dto.SchoolName;
+        if (dto.ZoneName != null) zone.ZoneName = dto.ZoneName;
         if (dto.Type != null) zone.Type = dto.Type;
         if (dto.Location != null) zone.Location = dto.Location;
+        if (dto.Description != null) zone.Description = dto.Description;
+        if (dto.Latitude.HasValue) zone.Latitude = dto.Latitude.Value;
+        if (dto.Longitude.HasValue) zone.Longitude = dto.Longitude.Value;
 
         await _parkingZoneRepository.UpdateAsync(zone);
         return MapToDto(zone);
@@ -64,7 +72,11 @@ public class ParkingZoneService : IParkingZoneService
     {
         Id = zone.Id,
         SchoolName = zone.SchoolName,
+        ZoneName = zone.ZoneName,
         Type = zone.Type,
-        Location = zone.Location
+        Location = zone.Location,
+        Description = zone.Description,
+        Latitude = zone.Latitude,
+        Longitude = zone.Longitude
     };
 }

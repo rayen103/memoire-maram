@@ -32,6 +32,8 @@ public class BadgeService : IBadgeService
         {
             Name = dto.Name,
             Description = dto.Description ?? string.Empty,
+            Type = dto.Type ?? string.Empty,
+            Image = dto.Image ?? string.Empty,
             MinPoints = dto.MinPoints
         };
         var created = await _badgeRepository.CreateAsync(badge);
@@ -45,6 +47,8 @@ public class BadgeService : IBadgeService
 
         badge.Name = dto.Name;
         badge.Description = dto.Description ?? string.Empty;
+        badge.Type = dto.Type ?? string.Empty;
+        badge.Image = dto.Image ?? string.Empty;
         badge.MinPoints = dto.MinPoints;
 
         await _badgeRepository.UpdateAsync(badge);
@@ -65,6 +69,8 @@ public class BadgeService : IBadgeService
         Id = badge.Id,
         Name = badge.Name,
         Description = badge.Description,
+        Type = badge.Type,
+        Image = badge.Image,
         MinPoints = badge.MinPoints
     };
 }

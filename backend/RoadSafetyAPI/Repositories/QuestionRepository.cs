@@ -18,6 +18,7 @@ public class QuestionRepository : IQuestionRepository
     {
         return await _context.Questions
             .Include(q => q.Answers)
+            .Include(q => q.Correction)
             .Where(q => q.QuizId == quizId)
             .ToListAsync();
     }
@@ -31,6 +32,7 @@ public class QuestionRepository : IQuestionRepository
     {
         return await _context.Questions
             .Include(q => q.Answers)
+            .Include(q => q.Correction)
             .FirstOrDefaultAsync(q => q.Id == id);
     }
 

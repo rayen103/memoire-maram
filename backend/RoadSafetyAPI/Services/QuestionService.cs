@@ -1,4 +1,5 @@
 using RoadSafetyAPI.DTOs.Answer;
+using RoadSafetyAPI.DTOs.Correction;
 using RoadSafetyAPI.DTOs.Question;
 using RoadSafetyAPI.Models;
 using RoadSafetyAPI.Repositories.Interfaces;
@@ -32,7 +33,10 @@ public class QuestionService : IQuestionService
         var question = new Question
         {
             QuizId = dto.QuizId,
-            Content = dto.Content
+            Content = dto.Content,
+            Type = dto.Type ?? string.Empty,
+            Image = dto.Image ?? string.Empty,
+            Explication = dto.Explication ?? string.Empty
         };
         var created = await _questionRepository.CreateAsync(question);
         return MapToDto(created);
@@ -44,6 +48,9 @@ public class QuestionService : IQuestionService
         if (question == null) return null;
 
         if (dto.Content != null) question.Content = dto.Content;
+        if (dto.Type != null) question.Type = dto.Type;
+        if (dto.Image != null) question.Image = dto.Image;
+        if (dto.Explication != null) question.Explication = dto.Explication;
 
         await _questionRepository.UpdateAsync(question);
         return MapToDto(question);
@@ -63,12 +70,23 @@ public class QuestionService : IQuestionService
         Id = question.Id,
         QuizId = question.QuizId,
         Content = question.Content,
+        Type = question.Type,
+        Image = question.Image,
+        Explication = question.Explication,
         Answers = question.Answers?.Select(a => new AnswerDto
         {
             Id = a.Id,
             QuestionId = a.QuestionId,
             Content = a.Content,
             IsCorrect = a.IsCorrect
-        }).ToList() ?? new List<AnswerDto>()
+        }).ToList() ?? new List<AnswerDto>(),
+        Correction = question.Correction == null ? null : new CorrectionDto
+        {
+            Id = question.Correction.Id,
+            QuestionId = question.Correction.QuestionId,
+            Text = question.Correction.Text,
+            Image = question.Correction.Image,
+            Video = question.Correction.Video
+        }
     };
 }

@@ -177,6 +177,9 @@ public class StudentService : IStudentService
     {
         Id = profile.Id,
         UserId = profile.UserId,
+        FirstName = profile.FirstName,
+        Age = profile.Age,
+        Avatar = profile.Avatar,
         Points = profile.Points,
         Level = profile.Level,
         Name = profile.User?.Name ?? string.Empty,
@@ -185,6 +188,8 @@ public class StudentService : IStudentService
             Id = sb.Badge.Id,
             Name = sb.Badge.Name,
             Description = sb.Badge.Description,
+            Type = sb.Badge.Type,
+            Image = sb.Badge.Image,
             MinPoints = sb.Badge.MinPoints
         }).ToList() ?? new List<BadgeDto>()
     };

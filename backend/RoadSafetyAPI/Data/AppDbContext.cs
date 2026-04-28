@@ -13,9 +13,13 @@ public class AppDbContext : DbContext
     public DbSet<Quiz> Quizzes => Set<Quiz>();
     public DbSet<Question> Questions => Set<Question>();
     public DbSet<Answer> Answers => Set<Answer>();
+    public DbSet<Correction> Corrections => Set<Correction>();
     public DbSet<StudentAnswer> StudentAnswers => Set<StudentAnswer>();
+    public DbSet<Score> Scores => Set<Score>();
     public DbSet<Badge> Badges => Set<Badge>();
     public DbSet<StudentBadge> StudentBadges => Set<StudentBadge>();
+    public DbSet<Defi> Defis => Set<Defi>();
+    public DbSet<StudentDefi> StudentDefis => Set<StudentDefi>();
     public DbSet<Video> Videos => Set<Video>();
     public DbSet<SafetyTip> SafetyTips => Set<SafetyTip>();
     public DbSet<ParkingZone> ParkingZones => Set<ParkingZone>();
@@ -27,6 +31,10 @@ public class AppDbContext : DbContext
         // StudentBadge composite key
         modelBuilder.Entity<StudentBadge>()
             .HasKey(sb => new { sb.StudentProfileId, sb.BadgeId });
+
+        // StudentDefi composite key
+        modelBuilder.Entity<StudentDefi>()
+            .HasKey(sd => new { sd.StudentProfileId, sd.DefiId });
 
         // User -> StudentProfile one-to-one
         modelBuilder.Entity<User>()
@@ -52,6 +60,12 @@ public class AppDbContext : DbContext
             .WithOne(a => a.Question)
             .HasForeignKey(a => a.QuestionId);
 
+        // Question -> Correction one-to-one
+        modelBuilder.Entity<Question>()
+            .HasOne(q => q.Correction)
+            .WithOne(c => c.Question)
+            .HasForeignKey<Correction>(c => c.QuestionId);
+
         // StudentProfile -> StudentAnswer one-to-many
         modelBuilder.Entity<StudentProfile>()
             .HasMany(sp => sp.StudentAnswers)
@@ -69,5 +83,23 @@ public class AppDbContext : DbContext
             .HasMany(b => b.StudentBadges)
             .WithOne(sb => sb.Badge)
             .HasForeignKey(sb => sb.BadgeId);
+
+        // StudentProfile -> Score one-to-many
+        modelBuilder.Entity<StudentProfile>()
+            .HasMany(sp => sp.Scores)
+            .WithOne(s => s.StudentProfile)
+            .HasForeignKey(s => s.StudentProfileId);
+
+        // Defi -> StudentDefi one-to-many
+        modelBuilder.Entity<Defi>()
+            .HasMany(d => d.StudentDefis)
+            .WithOne(sd => sd.Defi)
+            .HasForeignKey(sd => sd.DefiId);
+
+        // StudentProfile -> StudentDefi one-to-many
+        modelBuilder.Entity<StudentProfile>()
+            .HasMany<StudentDefi>()
+            .WithOne(sd => sd.StudentProfile)
+            .HasForeignKey(sd => sd.StudentProfileId);
     }
 }
