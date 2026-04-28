@@ -69,7 +69,8 @@ export class AuthService {
     if (!raw) return null;
     try {
       return JSON.parse(raw);
-    } catch {
+    } catch (e) {
+      console.error('Corrupt auth data in localStorage; clearing session.', e);
       localStorage.removeItem(this.userKey);
       localStorage.removeItem(this.tokenKey);
       return null;
