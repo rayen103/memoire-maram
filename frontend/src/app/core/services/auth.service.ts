@@ -65,7 +65,14 @@ export class AuthService {
   }
 
   private getStoredUser(): AppUser | null {
-    const user = localStorage.getItem(this.userKey);
-    return user ? JSON.parse(user) : null;
+    const raw = localStorage.getItem(this.userKey);
+    if (!raw) return null;
+    try {
+      return JSON.parse(raw);
+    } catch {
+      localStorage.removeItem(this.userKey);
+      localStorage.removeItem(this.tokenKey);
+      return null;
+    }
   }
 }
