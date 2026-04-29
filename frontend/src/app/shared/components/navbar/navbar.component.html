@@ -1,6 +1,8 @@
 <nav class="nav">
   <a class="brand" routerLink="/">Road Safety Edu</a>
   <div class="links" *ngIf="auth.user as user">
+    <a *ngIf="user.role === 'STUDENT'" routerLink="/student" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Dashboard</a>
+    <a *ngIf="user.role === 'STUDENT'" routerLink="/student/defis" routerLinkActive="active">Challenges</a>
     <span>{{ user.name }} ({{ user.role }})</span>
     <button type="button" (click)="logout()">Logout</button>
   </div>

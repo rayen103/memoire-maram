@@ -1,6 +1,6 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ApiService } from '../../../core/services/api.service';
-import { Answer, Question, QuizResult } from '../../../core/models/app.models';
+import { Answer, Correction, Question, QuizResult } from '../../../core/models/app.models';
 
 @Component({
   selector: 'app-quiz-player',
@@ -11,6 +11,7 @@ import { Answer, Question, QuizResult } from '../../../core/models/app.models';
 export class QuizPlayerComponent implements OnChanges {
   @Input() studentProfileId!: number;
   @Input() quizId!: number;
+  @Output() quizCompleted = new EventEmitter<number>();
 
   questions: Question[] = [];
   answersByQuestion: Record<number, Answer[]> = {};
@@ -19,6 +20,7 @@ export class QuizPlayerComponent implements OnChanges {
   currentCorrect = 0;
   submitted = false;
   result?: QuizResult;
+  currentCorrection?: Correction;
 
   constructor(private readonly api: ApiService) {}
 
@@ -37,13 +39,14 @@ export class QuizPlayerComponent implements OnChanges {
     this.currentCorrect = 0;
     this.submitted = false;
     this.result = undefined;
+    this.currentCorrection = undefined;
   }
 
   private loadQuiz(): void {
     this.api.getQuestionsByQuiz(this.quizId).subscribe((questions) => {
       this.questions = questions;
       this.questions.forEach((q) => {
-        this.api.getAnswersByQuestion(q.id).subscribe((answers) => (this.answersByQuestion[q.id] = answers));
+        this.answersByQuestion[q.id] = q.answers ?? [];
       });
     });
   }
@@ -58,18 +61,30 @@ export class QuizPlayerComponent implements OnChanges {
         if (response.isCorrect) {
           this.currentCorrect += 1;
         }
+        if (question.correction) {
+          this.currentCorrection = question.correction;
+        } else {
+          this.api.getCorrectionByQuestion(question.id).subscribe({
+            next: (c) => (this.currentCorrection = c),
+            error: () => (this.currentCorrection = undefined)
+          });
+        }
       });
   }
 
   next(): void {
     this.feedback = '';
     this.submitted = false;
+    this.currentCorrection = undefined;
     if (this.currentIndex < this.questions.length - 1) {
       this.currentIndex += 1;
       return;
     }
 
-    this.api.getQuizResult(this.studentProfileId, this.quizId).subscribe((result) => (this.result = result));
+    this.api.getQuizResult(this.studentProfileId, this.quizId).subscribe((result) => {
+      this.result = result;
+      this.quizCompleted.emit(result.correctAnswers * 10);
+    });
   }
 
   get progress(): number {

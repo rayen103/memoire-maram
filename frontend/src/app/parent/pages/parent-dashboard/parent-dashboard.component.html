@@ -3,8 +3,17 @@
     <h2>School Parking Zones</h2>
     <ul>
       <li *ngFor="let zone of parkingZones">
-        <strong>{{ zone.schoolName }}</strong> - {{ zone.type }}<br />
+        <strong>{{ zone.schoolName }}</strong>
+        <span *ngIf="zone.zoneName"> — {{ zone.zoneName }}</span>
+        — <span [style.color]="zone.type === 'FORBIDDEN' ? '#dc2626' : '#16a34a'">{{ zone.type }}</span><br />
         <small>{{ zone.location }}</small>
+        <span *ngIf="zone.description"><br /><em>{{ zone.description }}</em></span>
+        <span *ngIf="zone.latitude && zone.longitude">
+          <br />
+          <a [href]="'https://maps.google.com/?q=' + zone.latitude + ',' + zone.longitude" target="_blank" rel="noopener">
+            📍 View on map
+          </a>
+        </span>
       </li>
     </ul>
   </article>
@@ -12,7 +21,29 @@
   <article class="card">
     <h2>Safety Recommendations</h2>
     <ul>
-      <li *ngFor="let tip of tips">{{ tip.content }}</li>
+      <li *ngFor="let tip of tips">
+        <strong>{{ tip.title }}</strong>
+        <span *ngIf="tip.type" class="tip-type"> [{{ tip.type }}]</span><br />
+        {{ tip.description }}
+        <span *ngIf="tip.image"><br /><img [src]="tip.image" [alt]="tip.title" style="max-width:100%;border-radius:6px;margin-top:4px;" /></span>
+        <span *ngIf="tip.video"><br /><a [href]="tip.video" target="_blank" rel="noopener">▶ Watch video</a></span>
+      </li>
     </ul>
+  </article>
+
+  <article class="card">
+    <h2>Child Progress</h2>
+    <div class="child-input">
+      <label for="childId">Student Profile ID:</label>
+      <input id="childId" type="number" [(ngModel)]="childStudentProfileId" placeholder="Enter ID" />
+      <button (click)="loadChildScores()">Load Scores</button>
+    </div>
+    <ul *ngIf="childScores.length">
+      <li *ngFor="let score of childScores">
+        <strong>{{ score.quizTitle }}</strong>: {{ score.scoreObtenu }} pts
+        <small> — {{ score.date | date:'shortDate' }}</small>
+      </li>
+    </ul>
+    <p *ngIf="childScores.length === 0 && childStudentProfileId">No scores recorded yet.</p>
   </article>
 </section>

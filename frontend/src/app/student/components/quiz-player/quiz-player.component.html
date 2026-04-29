@@ -3,6 +3,10 @@
   <div class="progress"><div [style.width.%]="progress"></div></div>
   <p>Question {{ currentIndex + 1 }} / {{ questions.length }}</p>
 
+  <div *ngIf="questions[currentIndex].image" class="question-image">
+    <img [src]="questions[currentIndex].image" [alt]="questions[currentIndex].content" style="max-width:100%;border-radius:8px;" />
+  </div>
+
   <app-question-card
     [question]="questions[currentIndex]"
     [answers]="answersByQuestion[questions[currentIndex].id] || []"
@@ -11,6 +15,19 @@
   ></app-question-card>
 
   <p class="feedback" *ngIf="feedback">{{ feedback }}</p>
+
+  <div class="correction card" *ngIf="submitted && currentCorrection">
+    <h4>💡 Explanation</h4>
+    <p>{{ currentCorrection.text }}</p>
+    <img *ngIf="currentCorrection.image" [src]="currentCorrection.image" alt="Correction illustration" style="max-width:100%;" />
+    <a *ngIf="currentCorrection.video" [href]="currentCorrection.video" target="_blank" rel="noopener">▶ Watch explanation video</a>
+  </div>
+
+  <div class="correction card" *ngIf="submitted && !currentCorrection && questions[currentIndex].explication">
+    <h4>💡 Explanation</h4>
+    <p>{{ questions[currentIndex].explication }}</p>
+  </div>
+
   <button class="next" type="button" [disabled]="!submitted" (click)="next()">
     {{ currentIndex < questions.length - 1 ? 'Next question' : 'Finish quiz' }}
   </button>

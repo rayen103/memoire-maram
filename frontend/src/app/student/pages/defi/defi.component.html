@@ -1,0 +1,24 @@
+<section class="card">
+  <h2>Challenges (Défis)</h2>
+  <p *ngIf="loading">Loading...</p>
+
+  <ul class="defi-list" *ngIf="!loading">
+    <li *ngFor="let defi of allDefis" class="defi-item">
+      <div class="defi-header">
+        <strong>{{ defi.title }}</strong>
+        <span class="points">+{{ defi.pointsGain }} pts</span>
+      </div>
+      <p class="defi-desc">{{ defi.description }}</p>
+      <p class="defi-obj"><em>Objective: {{ defi.objective }}</em></p>
+
+      <ng-container *ngIf="getStudentDefi(defi.id) as sd; else notStarted">
+        <span *ngIf="sd.isCompleted" class="badge-completed">✅ Completed</span>
+        <button *ngIf="!sd.isCompleted" (click)="complete(defi.id)">Mark as Completed</button>
+      </ng-container>
+
+      <ng-template #notStarted>
+        <button (click)="start(defi.id)">Start Challenge</button>
+      </ng-template>
+    </li>
+  </ul>
+</section>

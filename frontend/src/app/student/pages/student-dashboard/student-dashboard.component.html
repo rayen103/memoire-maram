@@ -1,9 +1,12 @@
 <section class="grid" *ngIf="profile">
   <article class="card">
-    <h2>Welcome {{ profile.name }}</h2>
+    <h2>Welcome {{ profile.firstName || profile.name }}</h2>
     <p>Points: <strong>{{ profile.points }}</strong> | Level: <strong>{{ profile.level }}</strong></p>
     <div class="badges">
-      <span *ngFor="let badge of profile.badges">🏅 {{ badge.name }}</span>
+      <span *ngFor="let badge of profile.badges" title="{{ badge.description }}">
+        <img *ngIf="badge.image" [src]="badge.image" [alt]="badge.name" style="width:20px;vertical-align:middle;" />
+        🏅 {{ badge.name }}
+      </span>
     </div>
   </article>
 
@@ -13,9 +16,24 @@
       <button *ngFor="let quiz of quizzes" (click)="startQuiz(quiz.id)">{{ quiz.title }} (L{{ quiz.level }})</button>
     </div>
   </article>
+
+  <article class="card" *ngIf="scores.length">
+    <h3>Score History</h3>
+    <ul>
+      <li *ngFor="let score of scores">
+        <strong>{{ score.quizTitle }}</strong>: {{ score.scoreObtenu }} pts
+        <small> — {{ score.date | date:'shortDate' }}</small>
+      </li>
+    </ul>
+  </article>
 </section>
 
-<app-quiz-player *ngIf="profile && selectedQuizId" [studentProfileId]="profile.id" [quizId]="selectedQuizId"></app-quiz-player>
+<app-quiz-player
+  *ngIf="profile && selectedQuizId"
+  [studentProfileId]="profile.id"
+  [quizId]="selectedQuizId"
+  (quizCompleted)="onQuizCompleted($event)"
+></app-quiz-player>
 
 <section class="card" *ngIf="videos.length">
   <h3>Educational Videos</h3>
